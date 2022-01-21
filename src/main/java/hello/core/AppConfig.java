@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 // 역할과 구현의 분리
-@Configuration // 설정정보다
+@Configuration // 설정정보, 싱글톤보장해줌, CGLIB
 public class AppConfig {
 
     @Bean
