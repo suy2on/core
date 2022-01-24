@@ -17,7 +17,18 @@ public class OrderServiceImpl implements OrderService{
     //private final DiscountPolicy discountPolicy = new RateDiscountPolicy();  OCP 위반 , 확장하면서 코드를 수정..
     private final DiscountPolicy discountPolicy; // DIP 지켜짐
 
-    // 생성자 의존성주입
+//    수정자주입 : 선택전, 변경가능
+//    @Autowired
+//    public void setMemberRepository(MemberRepository memberRepository){
+//        this.memberRepository = memberRepository;
+//    }
+//
+//    @Autowired
+//    public void setDiscountPolicy(DiscountPolicy discountPolicy){
+//        this.discountPolicy = discountPolicy;
+//    }
+
+    // 생성자 의존성주입 : 불변
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
         this.memberRepository = memberRepository;
