@@ -21,11 +21,13 @@ public class BeanLifeCycleTest {
 
     @Configuration
     static class LifeCycleConfig {
-        @Bean
+
+        @Bean //(initMethod = "init", destroyMethod = "close") // destoryMethod는 close와 shutdown을 추론해서 알아서 해줌
         public NetworkClient networkClient(){
             NetworkClient networkClient = new NetworkClient();
             networkClient.setUrl("http://hello-spring.dev");
             return networkClient;
         }
+
     }
 }
