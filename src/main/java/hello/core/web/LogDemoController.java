@@ -25,7 +25,7 @@ public class LogDemoController {
         //MyLogger myLogger = myLoggerProvider.getObject();
         String requestURL = request.getRequestURL().toString();
         System.out.println("myLogger = " + myLogger.getClass()); // MyLogger$$EnhancerBySpringCGLIB$$d9f52477
-        myLogger.setRequestURL(requestURL); // 프록시가 실제 빈에 접근해서 가져온다 
+        myLogger.setRequestURL(requestURL); // 프록시가 실제 빈에 접근해서 가져온다
 
         myLogger.log("controller test");
         logDemoService.logic("testId");
