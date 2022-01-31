@@ -3,6 +3,7 @@ package hello.core.scope;
 import ch.qos.logback.core.net.server.Client;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.inject.Provider;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -49,15 +51,13 @@ public class SingletonWithPrototypeTest1 {
     static class ClientBean{
 
         @Autowired
-        ApplicationContext applicationContext;
+       // private ObjectProvider<PrototypeBean> prototypeBeanProvider;// 대리로 스프링 컨테이너에 요청해서 해당빈을 가져온다, 스프링빈이 등록되어있다
+        private Provider<PrototypeBean> prototypeBeanProvider; // 심플하고 스프링에 의존적이지 않음 , 라이브러리 댕겨와야함 javax.inject
 
-//        @Autowired
-//        public ClientBean(PrototypeBean prototypeBean){ // 이시점에 주입
-//            this.prototypeBean = prototypeBean;
-//        }
 
         public int logic(){
-            PrototypeBean prototypeBean = applicationContext.getBean(PrototypeBean.class);
+            PrototypeBean prototypeBean = prototypeBeanProvider.get(); // dependency lookup
+//            PrototypeBean prototypeBean = applicationContext.getBean(PrototypeBean.class); // DL
             prototypeBean.addCount();
             return prototypeBean.getCount();
         }
@@ -70,7 +70,7 @@ public class SingletonWithPrototypeTest1 {
 
         @PostConstruct
         public void init(){
-            System.out.println("PrototypeBean.init" + this);
+            System.out.println("PrototypeBean.init : " + this);
         }
 
         @PreDestroy
